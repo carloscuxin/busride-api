@@ -7,7 +7,7 @@ import { Messages } from '../config/languages/messages.MX';
 //-- Controlador de la tabla vehicles --//
 export default class VehicleController {
   private model: string = "Vehicle";
-
+  
   /**
    * Función que devuelve todos los registros
    * [12/06/2019] / acuxin
