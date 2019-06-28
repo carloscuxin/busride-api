@@ -1,0 +1,1 @@
+{"version":3,"file":"labels.EN.js","sourceRoot":"","sources":["../../../src/config/languages/labels.EN.ts"],"names":[],"mappings":";AAAA;;;GAGG;;AAEU,QAAA,MAAM,GAAG;IACpB,kBAAkB;IAClB,0BAA0B;IAC1B,cAAc,EAAE;QACd,IAAI,EAAE,MAAM;QACZ,QAAQ,EAAE,OAAO;QACjB,UAAU,EAAE,SAAS;QACrB,eAAe,EAAE,IAAI;QACrB,MAAM,EAAE,QAAQ;QAChB,UAAU,EAAE,SAAS;QACrB,UAAU,EAAE,SAAS;KACtB;CACF,CAAA"}
