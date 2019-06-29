@@ -17,8 +17,9 @@ const vehicleController = new VehicleController();
 router.route('/vehicles')
 .get(vehicleController.findAll)
 .post(vehicleController.insert)
-.put(vehicleController.update);
+.put(vehicleController.update)
 router.get('/vehicles/:id', vehicleController.findById);
+router.get('/vehicles/columns/model', vehicleController.getColumns);
 
 /**
  * Rutas para el controlador CompanyController

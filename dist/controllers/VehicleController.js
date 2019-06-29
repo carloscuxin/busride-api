@@ -15,12 +15,11 @@ class VehicleController {
          * [12/06/2019] / acuxin
         **/
         this.findAll = (req, res) => {
-            const columns = globalHelper_1.default.getColumnsTable(this.model);
             Vehicle_1.default.getAll().then(vehicles => {
                 if (vehicles.length === 0) {
-                    res.status(404).json({ args: false, message: messages_MX_1.Messages.generals.notFound });
+                    res.status(404).json({ args: true, message: messages_MX_1.Messages.generals.notFound });
                 }
-                res.json([vehicles, columns]);
+                res.json(vehicles);
             });
         };
         /**
@@ -50,6 +49,15 @@ class VehicleController {
             globalHelper_1.default.insert(vehicle, this.model)
                 .then(vehicle => res.json(vehicle))
                 .catch(err => res.json(err.errors));
+        };
+        /**
+         * Función que devuelve las columnas de la tabla
+         * [28/06/2019] / acuxin
+        **/
+        this.getColumns = (req, res, next) => {
+            const columns = globalHelper_1.default.getColumnsTable(this.model);
+            res.json(columns);
+            next();
         };
     }
     /**
