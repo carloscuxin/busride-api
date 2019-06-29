@@ -1,4 +1,4 @@
-import { Request, Response, RequestHandler } from "express";
+import { Request, Response } from "express";
 import Vehicle from '../models/Vehicle';
 import GlobalHelper from '../helpers/globalHelper';
 import { Messages } from '../config/languages/messages.MX';
@@ -13,11 +13,9 @@ export default class VehicleController {
    * [12/06/2019] / acuxin
   **/
   public findAll = (req: Request, res: Response) => {
-    const columns: Object[] = GlobalHelper.getColumnsTable(this.model);
-
     Vehicle.getAll().then(vehicles => {
-      if(vehicles.length === 0) { res.status(404).json({ args: false, message: Messages.generals.notFound }); }
-      res.json([ vehicles, columns ])
+      if(vehicles.length === 0) { res.status(404).json({ args: true, message: Messages.generals.notFound }); }
+      res.json(vehicles)
     });
   }
 
@@ -73,4 +71,15 @@ export default class VehicleController {
       //Vehicle.findOne(where).then(vehicle => res.json(vehicle));
     }); 
   }
+
+  /**
+   * Función que devuelve las columnas de la tabla
+   * [28/06/2019] / acuxin
+  **/
+  public getColumns = (req: Request, res: Response, next: any) => {
+    
+    const columns: Object[] = GlobalHelper.getColumnsTable(this.model);
+    res.json(columns);
+    next();
+  };
 }
