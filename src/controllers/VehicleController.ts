@@ -16,7 +16,7 @@ export default class VehicleController {
     Vehicle.getAll().then(vehicles => {
       if(vehicles.length === 0) { res.status(404).json({ args: true, message: Messages.generals.notFound }); }
       res.json(vehicles)
-    });
+    }).catch(err => res.status(500).json(err));
   }
 
   /**
@@ -77,7 +77,6 @@ export default class VehicleController {
    * [28/06/2019] / acuxin
   **/
   public getColumns = (req: Request, res: Response, next: any) => {
-    
     const columns: Object[] = GlobalHelper.getColumnsTable(this.model);
     res.json(columns);
     next();

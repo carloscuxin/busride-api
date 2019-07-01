@@ -20,7 +20,7 @@ class VehicleController {
                     res.status(404).json({ args: true, message: messages_MX_1.Messages.generals.notFound });
                 }
                 res.json(vehicles);
-            });
+            }).catch(err => res.status(500).json(err));
         };
         /**
          * Función que devuelve un registro por ID

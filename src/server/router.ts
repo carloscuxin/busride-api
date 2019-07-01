@@ -18,8 +18,9 @@ router.route('/vehicles')
 .get(vehicleController.findAll)
 .post(vehicleController.insert)
 .put(vehicleController.update)
+router.get('/vehicles/columnsTable', vehicleController.getColumns);
 router.get('/vehicles/:id', vehicleController.findById);
-router.get('/vehicles/columns/model', vehicleController.getColumns);
+
 
 /**
  * Rutas para el controlador CompanyController
