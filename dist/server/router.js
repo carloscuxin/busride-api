@@ -8,6 +8,7 @@ const router = express_1.Router();
 router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
     next();
 });
 /**
@@ -29,6 +30,8 @@ router.get('/vehicles/:id', vehicleController.findById);
 const CompanyController_1 = __importDefault(require("../controllers/CompanyController"));
 const companyController = new CompanyController_1.default();
 router.route('/companies')
-    .get(companyController.findAll);
+    .get(companyController.findAll)
+    .post(companyController.insert);
+router.get('/companies/columnsTable', companyController.getColumns);
 exports.default = router;
 //# sourceMappingURL=router.js.map

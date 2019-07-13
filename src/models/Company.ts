@@ -6,7 +6,7 @@ import Vehicle from './Vehicle';
 //-- Declaración de la clase --//
 export default class Company extends Model {
   public business_name!: string;
-  public comertial_name!: string;
+  public commercial_name!: string;
   public phone!: string;
   public email!: string;
   public web_page!: string;
@@ -33,10 +33,10 @@ Company.init({
     allowNull: false,
     comment: 'nameBusiness'
   },
-  comertial_name: {
+  commercial_name: {
     type: DataTypes.STRING,
     allowNull: false,
-    comment: 'nameComertial'
+    comment: 'nameCommercial'
   },
   phone: {
     type: DataTypes.STRING,
@@ -51,6 +51,7 @@ Company.init({
   web_page :{
     type: DataTypes.STRING,
     allowNull: false,
+    defaultValue: '',
     comment: 'namePage'
   },
   created_at: DataTypes.DATE,

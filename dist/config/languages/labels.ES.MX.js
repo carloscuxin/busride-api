@@ -4,7 +4,7 @@
  * [26/06/2019]
 **/
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Labels = {
+const Labels = {
     //-- Vehicles --//
     /* Columnas de la tabla */
     VehicleColumns: {
@@ -31,4 +31,5 @@ exports.Labels = {
         updated_at: "Actualizado"
     }
 };
-//# sourceMappingURL=labels.MX.js.map
+exports.default = Labels;
+//# sourceMappingURL=labels.ES.MX.js.map

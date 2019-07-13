@@ -54,10 +54,9 @@ class VehicleController {
          * Función que devuelve las columnas de la tabla
          * [28/06/2019] / acuxin
         **/
-        this.getColumns = (req, res, next) => {
+        this.getColumns = (req, res) => {
             const columns = globalHelper_1.default.getColumnsTable(this.model);
             res.json(columns);
-            next();
         };
     }
     /**
@@ -84,6 +83,7 @@ class VehicleController {
             //Vehicle.findOne(where).then(vehicle => res.json(vehicle));
         });
     }
+    ;
 }
 exports.default = VehicleController;
 //# sourceMappingURL=VehicleController.js.map

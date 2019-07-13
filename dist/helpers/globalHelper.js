@@ -7,11 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const labels_MX_1 = require("../config/languages/labels.MX");
+const Labels = __importStar(require("../config/languages"));
 const Vehicle_1 = __importDefault(require("../models/Vehicle"));
 const Company_1 = __importDefault(require("../models/Company"));
 //--  Helper global --//
@@ -78,15 +85,31 @@ class GlobalHelper {
         const ModelGeneric = this.getModel(model);
         const attributesModel = Object.keys(ModelGeneric.rawAttributes);
         const labelObject = this.getLabelObject(model, 'columnsTable');
-        let columnsTable = [];
-        attributesModel.filter(attr => ModelGeneric.rawAttributes[attr].comment).map(attr => {
-            const object = labels_MX_1.Labels[labelObject];
-            columnsTable.push({
-                title: (typeof object[attr] !== 'object') ? object[attr] : object[attr].output,
-                field: (typeof object[attr] !== 'object') ? attr : object[attr].reference
+        let columnsTable = { en: [], es: [], de: [] };
+        const languages = Object.keys(columnsTable);
+        languages.map(lang => {
+            const labels = this.getLabels(lang, labelObject);
+            attributesModel.filter(attr => ModelGeneric.rawAttributes[attr].comment).map(attr => {
+                columnsTable[lang].push({
+                    title: (typeof labels[attr] !== 'object') ? labels[attr] : labels[attr].output,
+                    field: (typeof labels[attr] !== 'object') ? attr : labels[attr].reference
+                });
             });
         });
         return columnsTable;
+    }
+    /**
+     * Función que devuelve el objeto de labels
+     * @param language
+     * @param labelObject
+    **/
+    static getLabels(language, labelObject) {
+        switch (language) {
+            case 'en': return Labels.LabelsEN[labelObject];
+            case 'es': return Labels.LabelsES[labelObject];
+            case 'de': return Labels.LabelsDE[labelObject];
+            default: return Labels.LabelsES[labelObject];
+        }
     }
 }
 exports.default = GlobalHelper;

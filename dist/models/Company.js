@@ -23,10 +23,10 @@ Company.init({
         allowNull: false,
         comment: 'nameBusiness'
     },
-    comertial_name: {
+    commercial_name: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        comment: 'nameComertial'
+        comment: 'nameCommercial'
     },
     phone: {
         type: sequelize_1.DataTypes.STRING,
@@ -41,6 +41,7 @@ Company.init({
     web_page: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
+        defaultValue: '',
         comment: 'namePage'
     },
     created_at: sequelize_1.DataTypes.DATE,

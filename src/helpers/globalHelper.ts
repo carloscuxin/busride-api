@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-import { Labels } from '../config/languages/labels.MX';
+import * as Labels from '../config/languages';
 import Vehicle from '../models/Vehicle';
 import Company from '../models/Company';
 
@@ -63,20 +63,37 @@ export default class GlobalHelper {
    * [26/06/2019] / acuxin
    * @param model 
   **/
-  static getColumnsTable(model: string): object[] {
+  static getColumnsTable(model: string): object {
     const ModelGeneric = this.getModel(model);
     const attributesModel = Object.keys(ModelGeneric.rawAttributes);
     const labelObject: string  = this.getLabelObject(model, 'columnsTable');
-    let columnsTable: object[] = [];
-    
-    attributesModel.filter(attr => ModelGeneric.rawAttributes[attr].comment).map(attr => {
-      const object = Labels[labelObject];
-      columnsTable.push({
-        title: (typeof object[attr] !== 'object') ? object[attr] : object[attr].output,
-        field: (typeof object[attr] !== 'object') ? attr : object[attr].reference
+    let columnsTable: any = {en: [], es: [], de: []};
+    const languages = Object.keys(columnsTable);
+
+    languages.map(lang => {
+      const labels = this.getLabels(lang, labelObject);
+      attributesModel.filter(attr => ModelGeneric.rawAttributes[attr].comment).map(attr => {
+        columnsTable[lang].push({
+          title: (typeof labels[attr] !== 'object') ? labels[attr] : labels[attr].output,
+          field: (typeof labels[attr] !== 'object') ? attr : labels[attr].reference
+        });
       });
     });
 
     return columnsTable;
+  }
+
+  /**
+   * Función que devuelve el objeto de labels 
+   * @param language 
+   * @param labelObject 
+  **/
+  private static getLabels(language: string, labelObject: string) {
+    switch (language) {
+      case 'en': return Labels.LabelsEN[labelObject];
+      case 'es': return Labels.LabelsES[labelObject];
+      case 'de': return Labels.LabelsDE[labelObject];
+      default: return Labels.LabelsES[labelObject];
+    }
   }
 }

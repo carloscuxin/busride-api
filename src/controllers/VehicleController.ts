@@ -17,7 +17,7 @@ export default class VehicleController {
       if(vehicles.length === 0) { res.status(404).json({ args: true, message: Messages.generals.notFound }); }
       res.json(vehicles)
     }).catch(err => res.status(500).json(err));
-  }
+  };
 
   /**
    * Función que devuelve un registro por ID
@@ -28,7 +28,7 @@ export default class VehicleController {
       if(!vehicle) { return res.status(404).json({ args: false, message: Messages.generals.notFound }); }
       res.json(vehicle);
     });
-  }
+  };
 
   /**
    * Función que inserta un registro
@@ -46,7 +46,7 @@ export default class VehicleController {
     GlobalHelper.insert(vehicle, this.model)
     .then(vehicle => res.json(vehicle))
     .catch(err => res.json(err.errors));
-  }
+  };
 
   /**
    * Función que actualiza un registro
@@ -70,15 +70,14 @@ export default class VehicleController {
       return res.json({ args: true, message: Messages.generals.updated });
       //Vehicle.findOne(where).then(vehicle => res.json(vehicle));
     }); 
-  }
+  };
 
   /**
    * Función que devuelve las columnas de la tabla
    * [28/06/2019] / acuxin
   **/
-  public getColumns = (req: Request, res: Response, next: any) => {
-    const columns: Object[] = GlobalHelper.getColumnsTable(this.model);
+  public getColumns = (req: Request, res: Response) => {
+    const columns: Object = GlobalHelper.getColumnsTable(this.model);
     res.json(columns);
-    next();
   };
 }
