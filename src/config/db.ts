@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
 
 let db: string = 'busride';
-let user: string = 'busride.user';
-let pasword: string = '123456'; 
+let user: string = 'busride_user';
+let pasword: string = 'Busr1d3bd.'; 
 
 export const connection = new Sequelize(db, user, pasword, {
   host: 'localhost',

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 let db = 'busride';
-let user = 'busride.user';
-let pasword = '123456';
+let user = 'busride_user';
+let pasword = 'Busr1d3bd.';
 exports.connection = new sequelize_1.Sequelize(db, user, pasword, {
     host: 'localhost',
     dialect: 'mysql',
