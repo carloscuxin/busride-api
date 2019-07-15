@@ -4,15 +4,18 @@
   "description": "busride backend",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon ./dist/index",
+    "local": "ENV=local nodemon ./dist/index",
+    "test": "ENV=developmemt nodemon ./dist/index",
     "html": "copyfiles --up 1 src/public/*.html dist",
-    "build": "tsc & npm run html"
+    "build": "tsc & npm run html",
+    "start": "ENV=production node ./dist/index"
   },
   "author": "Carlos Cuxin",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "copyfiles": "^2.1.0",
+    "custom-env": "^1.0.2",
     "express": "^4.17.1",
     "mysql2": "^1.6.5",
     "sequelize": "^5.9.0"

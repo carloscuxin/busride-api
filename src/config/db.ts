@@ -1,13 +1,13 @@
 import { Sequelize } from "sequelize";
 
-let db: string = 'busride';
-let user: string = 'busride_user';
-let pasword: string = 'Busr1d3bd.'; 
+const db: string = process.env.DB as string;
+const user: string = process.env.DB_USER as string;
+const pasword: string = process.env.DB_PASSWORD as string;
 
 export const connection = new Sequelize(db, user, pasword, {
-  host: 'localhost',
+  host: process.env.DB_HOST as string,
   dialect: 'mysql',
-  port: 3306,
+  port: parseInt(process.env.PORT as string) || 3306,
   define: {
     createdAt: 'created_at',
     updatedAt: 'updated_at'

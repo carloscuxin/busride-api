@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+require('custom-env').env(process.env.ENV);
 
 export default class Server {
   public app: express.Application

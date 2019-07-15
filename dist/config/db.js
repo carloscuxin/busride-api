@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
-let db = 'busride';
-let user = 'busride_user';
-let pasword = 'Busr1d3bd.';
+const db = process.env.DB;
+const user = process.env.DB_USER;
+const pasword = process.env.DB_PASSWORD;
 exports.connection = new sequelize_1.Sequelize(db, user, pasword, {
-    host: 'localhost',
+    host: process.env.DB_HOST,
     dialect: 'mysql',
-    port: 3306,
+    port: parseInt(process.env.PORT) || 3306,
     define: {
         createdAt: 'created_at',
         updatedAt: 'updated_at'
