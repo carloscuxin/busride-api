@@ -1,13 +1,8 @@
 import { Router } from "express";
+import jwtCheck from "../server/jwtCheck";
+import jwtAuthz from "express-jwt-authz";
 
 const router = Router();
-
-router.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
 
 /**
  * Rutas para el controlador VehicleController
@@ -29,8 +24,11 @@ router.get('/vehicles/:id', vehicleController.findById);
 **/
 import CompanyController from '../controllers/CompanyController';
 const companyController = new CompanyController();
+//Checamos y validamos los permisos
+const checkScopes = jwtAuthz(['read:companies']);
+
 router.route('/companies')
-.get(companyController.findAll)
+.get(jwtCheck, companyController.findAll)
 .post(companyController.insert);
 router.get('/companies/columnsTable', companyController.getColumns);
 

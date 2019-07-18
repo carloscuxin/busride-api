@@ -4,13 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const jwtCheck_1 = __importDefault(require("../server/jwtCheck"));
+const express_jwt_authz_1 = __importDefault(require("express-jwt-authz"));
 const router = express_1.Router();
-router.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    next();
-});
 /**
  * Rutas para el controlador VehicleController
  * [07/06/2019]
@@ -29,8 +25,10 @@ router.get('/vehicles/:id', vehicleController.findById);
 **/
 const CompanyController_1 = __importDefault(require("../controllers/CompanyController"));
 const companyController = new CompanyController_1.default();
+//Checamos y validamos los permisos
+const checkScopes = express_jwt_authz_1.default(['read:companies']);
 router.route('/companies')
-    .get(companyController.findAll)
+    .get(jwtCheck_1.default, companyController.findAll)
     .post(companyController.insert);
 router.get('/companies/columnsTable', companyController.getColumns);
 exports.default = router;

@@ -7,7 +7,7 @@ const pasword = process.env.DB_PASSWORD;
 exports.connection = new sequelize_1.Sequelize(db, user, pasword, {
     host: process.env.DB_HOST,
     dialect: 'mysql',
-    port: parseInt(process.env.PORT) || 3306,
+    port: parseInt(process.env.DB_PORT) || 3306,
     define: {
         createdAt: 'created_at',
         updatedAt: 'updated_at'

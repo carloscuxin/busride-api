@@ -1,4 +1,4 @@
-import { Request, Response, RequestHandler } from "express";
+import { Request, Response } from "express";
 import Company from '../models/Company';
 import GlobalHelper from '../helpers/globalHelper';
 import { Messages } from '../config/languages/messages.MX';
