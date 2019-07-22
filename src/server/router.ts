@@ -1,6 +1,5 @@
 import { Router } from "express";
 import jwtCheck from "../server/jwtCheck";
-import jwtAuthz from "express-jwt-authz";
 
 const router = Router();
 
@@ -25,11 +24,20 @@ router.get('/vehicles/:id', vehicleController.findById);
 import CompanyController from '../controllers/CompanyController';
 const companyController = new CompanyController();
 //Checamos y validamos los permisos
-const checkScopes = jwtAuthz(['read:companies']);
 
 router.route('/companies')
 .get(jwtCheck, companyController.findAll)
 .post(companyController.insert);
 router.get('/companies/columnsTable', companyController.getColumns);
+
+
+/**
+ * Rutas para el login
+ * [22/07/2019]
+**/
+import LoginController from '../controllers/LoginController';
+const loginController = new LoginController();
+router.route('/login')
+.post(loginController.login);
 
 export default router;

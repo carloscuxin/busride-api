@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const jwtCheck_1 = __importDefault(require("../server/jwtCheck"));
-const express_jwt_authz_1 = __importDefault(require("express-jwt-authz"));
 const router = express_1.Router();
 /**
  * Rutas para el controlador VehicleController
@@ -26,10 +25,17 @@ router.get('/vehicles/:id', vehicleController.findById);
 const CompanyController_1 = __importDefault(require("../controllers/CompanyController"));
 const companyController = new CompanyController_1.default();
 //Checamos y validamos los permisos
-const checkScopes = express_jwt_authz_1.default(['read:companies']);
 router.route('/companies')
     .get(jwtCheck_1.default, companyController.findAll)
     .post(companyController.insert);
 router.get('/companies/columnsTable', companyController.getColumns);
+/**
+ * Rutas para el login
+ * [22/07/2019]
+**/
+const LoginController_1 = __importDefault(require("../controllers/LoginController"));
+const loginController = new LoginController_1.default();
+router.route('/login')
+    .post(loginController.login);
 exports.default = router;
 //# sourceMappingURL=router.js.map

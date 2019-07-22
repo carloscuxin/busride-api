@@ -16,6 +16,10 @@ exports.Messages = {
     valVehicle: {
         lenCode: "Ingresar un codigo entre 2 y 10 caracteres.",
         nullCode: "Ingresar un código."
-    }
+    },
+    /* Login */
+    valLogin: {
+        logError: "Usuario o contraseña incorrecta",
+    },
 };
 //# sourceMappingURL=messages.MX.js.map
