@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import User from '../models/User';
+import User from "../models/User";
+import { LoginData } from "interfaces";
 //import { Messages } from '../config/languages/messages.MX';
 
 
@@ -12,7 +13,7 @@ export default class LoginController {
    * [26/06/2019] / acuxin
   **/
   public findUser = (req: Request, res: Response) => {
-    User.findUser().then(companies => {
+    User.getUser().then(companies => {
       //if(companies.length === 0) { res.status(404).json({ args: true, message: Messages.generals.notFound }); }
       res.json(companies)
     }).catch(err => res.status(500).json(err));
@@ -24,12 +25,11 @@ export default class LoginController {
    * [22/07/2019] / acuxin  
   **/
   public login = async (req: Request, res: Response) => {
-    const request: object = {
+    const request: LoginData = {
       username: req.body.user,
       password: req.body.password
     };
     
-    const user = await User.login(request);
-    return res.json(user);
+    return await User.login(request, req, res);
   };
 }

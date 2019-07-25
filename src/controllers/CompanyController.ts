@@ -3,7 +3,6 @@ import Company from '../models/Company';
 import GlobalHelper from '../helpers/globalHelper';
 import { Messages } from '../config/languages/messages.MX';
 
-
 //-- Controlador de la tabla vehicles --//
 export default class CompanyController {
   private model: string = "Company";

@@ -10,30 +10,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const db_1 = require("../config/db");
-const messages_MX_1 = require("../config/languages/messages.MX");
+const typeErrors_1 = require("../config/typeErrors");
+const authentication_1 = require("../server/services/authentication");
 //-- Declaración de la clase --//
 class User extends sequelize_1.Model {
     //-- Funciones --//
-    static findUser() {
+    static getUser() {
         return this.findAll();
     }
-    static login(data) {
+    ;
+    static login(data, req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const badRequest = typeErrors_1.typesErrors.badRequest;
+            const internalServer = typeErrors_1.typesErrors.internalServer;
             try {
                 const user = yield this.findOne({ where: { username: data.username } });
+                const logError = { args: false, type: badRequest };
                 if (!user)
-                    return { args: false, status: 400, message: messages_MX_1.Messages.valLogin.logError };
+                    return res.status(400).json(logError);
                 if (user.password !== data.password)
-                    return { args: false, status: 400, message: messages_MX_1.Messages.valLogin.logError };
-                return user;
+                    return res.status(400).json(logError);
+                const token = authentication_1.getToken(user);
+                return res.json({ user, token });
             }
             catch (error) {
-                return { args: false, message: `Error interno: ${error}` };
+                return res.status(500).json({ args: false, type: internalServer, message: error });
             }
         });
     }
+    ;
 }
 exports.default = User;
+;
 //-- Inicialización del modelo --/
 User.init({
     id: {

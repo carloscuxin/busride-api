@@ -4,12 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const jwtCheck_1 = __importDefault(require("../server/jwtCheck"));
+const authentication_1 = require("./services/authentication");
 const router = express_1.Router();
-/**
- * Rutas para el controlador VehicleController
- * [07/06/2019]
-**/
+// ========================================================================================== //
+// RUTAS DEL VEHICLECONTROLLER
+// ========================================================================================== //
 const VehicleController_1 = __importDefault(require("../controllers/VehicleController"));
 const vehicleController = new VehicleController_1.default();
 router.route('/vehicles')
@@ -18,21 +17,19 @@ router.route('/vehicles')
     .put(vehicleController.update);
 router.get('/vehicles/columnsTable', vehicleController.getColumns);
 router.get('/vehicles/:id', vehicleController.findById);
-/**
- * Rutas para el controlador CompanyController
- * [26/06/2019]
-**/
+// ========================================================================================== //
+// RUTAS DEL COMPANYCONTROLLER
+// ========================================================================================== //
 const CompanyController_1 = __importDefault(require("../controllers/CompanyController"));
 const companyController = new CompanyController_1.default();
 //Checamos y validamos los permisos
 router.route('/companies')
-    .get(jwtCheck_1.default, companyController.findAll)
+    .get(authentication_1.checkJWT, companyController.findAll)
     .post(companyController.insert);
 router.get('/companies/columnsTable', companyController.getColumns);
-/**
- * Rutas para el login
- * [22/07/2019]
-**/
+// ========================================================================================== //
+// RUTAS DEL LOGIN
+// ========================================================================================== //
 const LoginController_1 = __importDefault(require("../controllers/LoginController"));
 const loginController = new LoginController_1.default();
 router.route('/login')

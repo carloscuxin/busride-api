@@ -22,7 +22,7 @@ class LoginController {
          * [26/06/2019] / acuxin
         **/
         this.findUser = (req, res) => {
-            User_1.default.findUser().then(companies => {
+            User_1.default.getUser().then(companies => {
                 //if(companies.length === 0) { res.status(404).json({ args: true, message: Messages.generals.notFound }); }
                 res.json(companies);
             }).catch(err => res.status(500).json(err));
@@ -36,8 +36,7 @@ class LoginController {
                 username: req.body.user,
                 password: req.body.password
             };
-            const user = yield User_1.default.login(request);
-            return res.json(user);
+            return yield User_1.default.login(request, req, res);
         });
     }
 }

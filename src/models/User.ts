@@ -1,6 +1,9 @@
+import { Request, Response } from "express";
 import { Model, DataTypes } from 'sequelize';
+import { LoginData } from "interfaces";
 import { connection } from '../config/db';
-import { Messages } from "../config/languages/messages.MX";
+import { typesErrors } from "../config/typeErrors";
+import { getToken } from '../server/services/authentication';
 
 //-- Declaración de la clase --//
 export default class User extends Model {
@@ -12,21 +15,27 @@ export default class User extends Model {
   public readonly updated_at!: Date;
 
   //-- Funciones --//
-  static findUser() {
+  static getUser() {
     return this.findAll();
-  }
+  };
 
-  static async login(data: any) {
+  static async login(data: LoginData, req: Request, res: Response) {
+    const badRequest = typesErrors.badRequest;
+    const internalServer = typesErrors.internalServer;
+
     try {
       const user = await this.findOne({where: {username: data.username }});
-      if (!user) return {args: false, status: 400, message: Messages.valLogin.logError };
-      if (user.password !== data.password) return {args: false, status: 400, message: Messages.valLogin.logError };
+      const logError: object = {args: false, type: badRequest};
 
-      return user;
+      if (!user) return res.status(400).json(logError);
+      if (user.password !== data.password) return res.status(400).json(logError);
+
+      const token = getToken(user);
+      return res.json({user, token});
     }
-    catch(error) { return {args: false, message: `Error interno: ${error}` }; }
-  }
-}
+    catch(error) { return res.status(500).json({args: false, type: internalServer, message: error}); }
+  };
+};
 
 //-- Inicialización del modelo --/
 User.init({
