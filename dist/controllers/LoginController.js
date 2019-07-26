@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = __importDefault(require("../models/User"));
 //import { Messages } from '../config/languages/messages.MX';
+const authentication_1 = require("../server/services/authentication");
 //-- Controlador de la tabla vehicles --//
 class LoginController {
     constructor() {
@@ -26,6 +27,20 @@ class LoginController {
                 //if(companies.length === 0) { res.status(404).json({ args: true, message: Messages.generals.notFound }); }
                 res.json(companies);
             }).catch(err => res.status(500).json(err));
+        };
+        /**
+         * Función para checar si esta autenticado y es valido el token
+         * [27/07/2019] / acuxin
+        **/
+        this.isAuthenticated = (req, res) => {
+            //console.log(req.headers)
+            const userString = req.headers.user;
+            if (userString === "undefined")
+                return res.send(false);
+            const user = JSON.parse(req.headers.user);
+            const isValidToken = authentication_1.validateToken(user.token);
+            if (isValidToken)
+                return res.send(true);
         };
         /**
          * Función para iniciar sesión

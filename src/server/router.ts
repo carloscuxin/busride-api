@@ -36,7 +36,7 @@ import LoginController from '../controllers/LoginController';
 const loginController = new LoginController();
 router.route('/login')
 .post(loginController.login);
-
+router.get('/isAuthenticated', loginController.isAuthenticated);
 
 
 export default router;

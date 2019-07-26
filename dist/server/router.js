@@ -34,5 +34,6 @@ const LoginController_1 = __importDefault(require("../controllers/LoginControlle
 const loginController = new LoginController_1.default();
 router.route('/login')
     .post(loginController.login);
+router.get('/isAuthenticated', loginController.isAuthenticated);
 exports.default = router;
 //# sourceMappingURL=router.js.map

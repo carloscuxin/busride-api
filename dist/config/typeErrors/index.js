@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.typesErrors = {
-    badRequest: "InvalidRequest",
-    internalServer: "InternalServer"
+    badRequest: "badRequest",
+    internalServer: "internalServer"
 };
 //# sourceMappingURL=index.js.map
