@@ -24,13 +24,14 @@ class User extends sequelize_1.Model {
             const badRequest = typeErrors_1.typesErrors.badRequest;
             const internalServer = typeErrors_1.typesErrors.internalServer;
             try {
-                const user = yield this.findOne({ where: { username: data.username } });
+                const searchUser = yield this.findOne({ where: { username: data.username } });
                 const logError = { args: false, type: badRequest };
-                if (!user)
+                if (!searchUser)
                     return res.status(400).json(logError);
-                if (user.password !== data.password)
+                if (searchUser.password !== data.password)
                     return res.status(400).json(logError);
-                const token = authentication_1.getToken(user);
+                const token = authentication_1.getToken(searchUser);
+                const user = { username: searchUser.username };
                 return res.json({ user, token });
             }
             catch (error) {

@@ -9,8 +9,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
  * [17/07/2019] / acuxin
 **/
 exports.checkJWT = (req, res, next) => {
-    console.log('aasd', req);
-    const token = req.headers.authorization;
+    const token = exports.revertToken(req.headers.authorization);
     jsonwebtoken_1.default.verify(token, process.env.SECRET, (error, decode) => {
         if (error) {
             return res.status(401).json({
@@ -27,7 +26,7 @@ exports.checkJWT = (req, res, next) => {
 **/
 exports.validateToken = (token) => {
     try {
-        jsonwebtoken_1.default.verify(token, process.env.SECRET);
+        jsonwebtoken_1.default.verify(exports.revertToken(token), process.env.SECRET);
         return true;
     }
     catch (err) {
@@ -38,7 +37,18 @@ exports.validateToken = (token) => {
  * Crea webtoken valido
  * [23/07/2019] / acuxin
 **/
-exports.getToken = (user) => jsonwebtoken_1.default.sign({
-    user,
-}, process.env.SECRET, { expiresIn: process.env.EXPIRATION_TOKEN });
+exports.getToken = (user) => {
+    const token = jsonwebtoken_1.default.sign({
+        user: {
+            username: user.username
+        },
+    }, process.env.SECRET, { expiresIn: process.env.EXPIRATION_TOKEN });
+    return exports.transformToken(token);
+};
+/**
+ * Transforma y revierte los token
+ * [27/07/2019] / acuxin
+**/
+exports.transformToken = (token) => token.split('.').join('=');
+exports.revertToken = (token) => token.split('=').join('.');
 //# sourceMappingURL=authentication.js.map

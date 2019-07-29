@@ -29,20 +29,6 @@ class LoginController {
             }).catch(err => res.status(500).json(err));
         };
         /**
-         * Función para checar si esta autenticado y es valido el token
-         * [27/07/2019] / acuxin
-        **/
-        this.isAuthenticated = (req, res) => {
-            //console.log(req.headers)
-            const userString = req.headers.user;
-            if (userString === "undefined")
-                return res.send(false);
-            const user = JSON.parse(req.headers.user);
-            const isValidToken = authentication_1.validateToken(user.token);
-            if (isValidToken)
-                return res.send(true);
-        };
-        /**
          * Función para iniciar sesión
          * [22/07/2019] / acuxin
         **/
@@ -53,6 +39,18 @@ class LoginController {
             };
             return yield User_1.default.login(request, req, res);
         });
+        /**
+         * Función para checar si esta autenticado y es valido el token
+         * [27/07/2019] / acuxin
+        **/
+        this.isAuthenticated = (req, res) => {
+            const token = req.headers.authorization;
+            if (token === "undefined")
+                return res.send(false);
+            const isValidToken = authentication_1.validateToken(token);
+            if (isValidToken)
+                return res.send(true);
+        };
     }
 }
 exports.default = LoginController;

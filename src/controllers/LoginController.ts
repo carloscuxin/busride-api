@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/User";
 import { LoginData } from "interfaces";
 //import { Messages } from '../config/languages/messages.MX';
-import { validateToken } from '../server/services/authentication';
+import { validateToken, checkJWT } from '../server/services/authentication';
 
 
 //-- Controlador de la tabla vehicles --//
@@ -21,21 +21,6 @@ export default class LoginController {
   };
 
   /**
-   * Función para checar si esta autenticado y es valido el token
-   * [27/07/2019] / acuxin  
-  **/
-  public isAuthenticated = (req: Request, res: Response) => {
-    //console.log(req.headers)
-    const userString: string = req.headers.user as string;
-    if (userString === "undefined") return res.send(false);
-
-    const user = JSON.parse(req.headers.user as string);
-    const isValidToken = validateToken(user.token);
-    
-    if(isValidToken) return res.send(true);
-  };
-
-  /**
    * Función para iniciar sesión
    * [22/07/2019] / acuxin
   **/
@@ -46,5 +31,18 @@ export default class LoginController {
     };
     
     return await User.login(request, req, res);
+  };
+
+  /**
+   * Función para checar si esta autenticado y es valido el token
+   * [27/07/2019] / acuxin  
+  **/
+  public isAuthenticated = (req: Request, res: Response) => {
+    const token: string = req.headers.authorization as string;
+    if (token === "undefined") return res.send(false);
+
+    const isValidToken = validateToken(token);
+    
+    if(isValidToken) return res.send(true);
   };
 }

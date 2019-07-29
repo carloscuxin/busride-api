@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Model, DataTypes } from 'sequelize';
-import { LoginData } from "interfaces";
+//Own components
+import { LoginData, UserInterface } from "interfaces";
 import { connection } from '../config/db';
 import { typesErrors } from "../config/typeErrors";
 import { getToken } from '../server/services/authentication';
@@ -24,13 +25,14 @@ export default class User extends Model {
     const internalServer = typesErrors.internalServer;
 
     try {
-      const user = await this.findOne({where: {username: data.username }});
+      const searchUser = await this.findOne({where: {username: data.username }});
       const logError: object = {args: false, type: badRequest};
 
-      if (!user) return res.status(400).json(logError);
-      if (user.password !== data.password) return res.status(400).json(logError);
+      if (!searchUser) return res.status(400).json(logError);
+      if (searchUser.password !== data.password) return res.status(400).json(logError);
 
-      const token = getToken(user);
+      const token = getToken(searchUser);
+      const user: UserInterface = {username: searchUser.username};
       return res.json({user, token});
     }
     catch(error) { return res.status(500).json({args: false, type: internalServer, message: error}); }
