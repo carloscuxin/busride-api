@@ -18,7 +18,7 @@
     "custom-env": "^1.0.2",
     "express": "^4.17.1",
     "mysql2": "^1.6.5",
-    "sequelize": "^5.9.0"
+    "sequelize": "^5.15.1"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.27",
