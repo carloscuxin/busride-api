@@ -37,6 +37,7 @@ const loginController = new LoginController();
 router.route('/login')
 .post(loginController.login);
 router.get('/isAuthenticated', loginController.isAuthenticated);
+router.post('/notification/post', loginController.post);
 
 
 export default router;

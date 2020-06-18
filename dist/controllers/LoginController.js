@@ -48,8 +48,11 @@ class LoginController {
             if (token === "undefined")
                 return res.send(false);
             const isValidToken = authentication_1.validateToken(token);
-            if (isValidToken)
-                return res.send(true);
+            return (isValidToken) ? res.send(true) : res.send(false);
+        };
+        this.post = (req, res) => {
+            const tag = req.body.message;
+            console.log(tag);
         };
     }
 }

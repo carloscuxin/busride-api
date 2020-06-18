@@ -43,6 +43,11 @@ export default class LoginController {
 
     const isValidToken = validateToken(token);
     
-    if(isValidToken) return res.send(true);
+    return (isValidToken) ? res.send(true) : res.send(false);
+  };
+
+  public post = (req: Request, res: Response) => {
+    const tag: string = req.body.message;
+    console.log(tag);
   };
 }

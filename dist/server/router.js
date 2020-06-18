@@ -35,5 +35,6 @@ const loginController = new LoginController_1.default();
 router.route('/login')
     .post(loginController.login);
 router.get('/isAuthenticated', loginController.isAuthenticated);
+router.post('/notification/post', loginController.post);
 exports.default = router;
 //# sourceMappingURL=router.js.map
